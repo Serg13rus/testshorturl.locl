@@ -23,7 +23,7 @@ $url = $actionUrl->getFullUrl();
     </head>
     <body>
 
-    <h1>Короткий URL не найден</h1>
+    <h1>Сокращённый URL не найден</h1>
 
     </body>
     </html>
