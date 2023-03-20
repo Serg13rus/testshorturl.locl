@@ -50,6 +50,29 @@ class ActionUrl
     }
 
     /**
+     * Закрытый метод для проверки сокращённого URL.
+     *
+     * @param string $shortUrl - сокращённый URL.
+     *
+     * @return bool
+     */
+    private function _checkShortUrl($shortUrl)
+    {
+        $data = file_get_contents($this->listUrlPath);
+        if ($data) {
+            $objUrl = json_decode($data, true);
+            foreach ($objUrl as $val) {
+                if ($val == $shortUrl) {
+                    return false;
+                }
+            }
+        } else {
+            return true;
+        }
+        return true;
+    }
+
+    /**
      * Закрытый метод для генерации сокращённого URL.
      *
      * Устанавливает значение закрытому свойству класса "shortUrl"
@@ -93,6 +116,9 @@ class ActionUrl
             $this->shortUrl = $objUrl[$this->url];
         } else {
             $this->_generateUrl($length);
+            if (!$this->_checkShortUrl($this->shortUrl)) {
+                $this->_generateUrl($length);
+            }
             $objUrl[$this->url] = $this->shortUrl;
         }
 
@@ -112,12 +138,12 @@ class ActionUrl
     public function getFullUrl()
     {
         $objUrl = json_decode(file_get_contents($this->listUrlPath));
-        foreach ($objUrl as $key=>$val) {
+        foreach ($objUrl as $key => $val) {
             if ($val == $this->shortUrl) {
                 $this->url = $key;
             }
         }
-       return $this->url;
+        return $this->url;
     }
 
 }
