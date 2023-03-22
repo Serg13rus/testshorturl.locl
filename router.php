@@ -1,6 +1,8 @@
 <?php
 spl_autoload_register(function ($class) {
-    include $class . '.php';
+    $str = $class . '.php';
+    $loadUrl = str_replace("\\", "/", $str);
+    require_once $loadUrl;
 });
 
 use Actions\ActionUrl;
@@ -8,12 +10,13 @@ use Actions\ActionUrl;
 $shortUrl = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $actionUrl = new ActionUrl('', $shortUrl, 'urlrewrite.php');
 $url = $actionUrl->getFullUrl();
+
 ?>
 <?php if ($url): ?>
-    <?php
-    header('Location: ' . $url);
+<?php
+    header('Location:' . $url);
     die();
-    ?>
+?>
 <?php else: ?>
     <!DOCTYPE html>
     <html lang="en">

@@ -18,6 +18,5 @@
 
 <p><input type="submit" value="Получить короткий URL"
           onclick="requestShortUrl('shorturl.php', 'shortUrl', document.getElementById('url').value, 'urlrewrite.php', 5)"></p>
-
 </body>
 </html>

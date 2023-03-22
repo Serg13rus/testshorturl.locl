@@ -1,6 +1,8 @@
 <?php
 spl_autoload_register(function ($class) {
-    include $class . '.php';
+    $str = $class . '.php';
+    $loadUrl = str_replace("\\", "/", $str);
+    require_once $loadUrl;
 });
 
 use Actions\ActionUrl;
